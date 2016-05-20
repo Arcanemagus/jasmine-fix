@@ -1,0 +1,25 @@
+{
+  "name": "jasmine-fix",
+  "version": "1.0.0",
+  "description": "My helper utilities to fix Jasmine and Add async helpers to it",
+  "main": "index.js",
+  "scripts": {
+    "test": "apm test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/steelbrain/jasmine-fix.git"
+  },
+  "keywords": [
+    "jasmine",
+    "fix",
+    "specs",
+    "atom"
+  ],
+  "author": "steelbrain",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/steelbrain/jasmine-fix/issues"
+  },
+  "homepage": "https://github.com/steelbrain/jasmine-fix#readme"
+}
