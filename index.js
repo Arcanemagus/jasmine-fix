@@ -3,7 +3,7 @@
 function promisedFit(name, callback) {
   fit(name, function() {
     const value = callback()
-    if (value && value.constructor.name === 'Promise') {
+    if (value && typeof value.then === 'function') {
       waitsForPromise({ timeout: 10 * 1000 }, function() {
         return value
       })
@@ -14,7 +14,7 @@ function promisedFit(name, callback) {
 function promisedIt(name, callback) {
   it(name, function() {
     const value = callback()
-    if (value && value.constructor.name === 'Promise') {
+    if (value && typeof value.then === 'function') {
       waitsForPromise({ timeout: 10 * 1000 }, function() {
         return value
       })
