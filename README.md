@@ -16,7 +16,15 @@ Proxy of the `it` Jasmine function which accepts `async` callbacks, so you can d
 
 #### `fit`
 
-Just like `it` but proxies `fit` instead
+Proxy of the `fit` Jasmine function which accepts `async` callbacks
+
+#### `beforeEach`
+
+Proxy of the `beforeEach` Jasmine function which accepts `async` callbacks
+
+#### `afterEach`
+
+Proxy of the `beforeEach` Jasmine function which accepts `async` callbacks
 
 #### `wait`
 

@@ -22,6 +22,28 @@ function promisedIt(name, callback) {
   })
 }
 
+function promisedBeforeEach(callback) {
+  beforeEach(function() {
+    const value = callback()
+    if (value && typeof value.then === 'function') {
+      waitsForPromise({ timeout: 10 * 1000 }, function() {
+        return value
+      })
+    }
+  })
+}
+
+function promisedAfterEach(callback) {
+  afterEach(function() {
+    const value = callback()
+    if (value && typeof value.then === 'function') {
+      waitsForPromise({ timeout: 10 * 1000 }, function() {
+        return value
+      })
+    }
+  })
+}
+
 function promisedWait(timeout) {
   return new Promise(function(resolve) {
     setTimeout(resolve, timeout)
@@ -46,4 +68,6 @@ module.exports = {
   it: promisedIt,
   fit: promisedFit,
   wait: promisedWait,
+  beforeEach: promisedBeforeEach,
+  afterEach: promisedAfterEach,
 }
