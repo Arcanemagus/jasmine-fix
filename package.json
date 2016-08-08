@@ -1,6 +1,6 @@
 {
   "name": "jasmine-fix",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "My helper utilities to fix Jasmine and Add async helpers to it",
   "main": "index.js",
   "scripts": {
