@@ -1,6 +1,8 @@
 Jasmine-Fix
 ============
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/steelbrain/jasmine-fix.svg)](https://greenkeeper.io/)
+
 Jasmine-Fix is a collection of my helper utilities and fixes for Jasmine. It resets the clock to native one, so you don't have to do `advanceClock` and can write your specs just like you write your app.
 
 ### Installation
