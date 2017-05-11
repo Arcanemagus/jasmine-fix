@@ -1,6 +1,6 @@
 'use babel'
 
-import { it as myIt, wait } from '../'
+import { it as myIt, wait, beforeEach } from '../'
 
 describe('Jasmine-Fix', function() {
   describe('it', function() {
@@ -59,6 +59,18 @@ describe('Jasmine-Fix', function() {
       await wait(20)
       const diff = Date.now() - time
       expect(diff).toBe(20)
+    })
+  })
+  describe('patched beforeEach', function() {
+    let timesExecuted = 0
+    beforeEach(function() {
+      timesExecuted++
+    })
+    it('a', function() {})
+    it('b', function() {})
+    it('c', function() {})
+    it('d', function() {
+      expect(timesExecuted).toBe(4)
     })
   })
 })

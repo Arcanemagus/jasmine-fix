@@ -1,3 +1,7 @@
+## 1.1.1
+
+- Fix `beforeEach` and `afterEach` *facepalm*
+
 ## 1.1.0
 
 - Simplify package

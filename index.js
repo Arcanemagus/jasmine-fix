@@ -13,15 +13,22 @@ function waitsForPromise (fn) {
 const names = ['beforeEach', 'afterEach', 'it', 'fit', 'ffit', 'fffit']
 
 names.forEach((name) => {
-  module.exports[name] = function(description, callback) {
-    global[name](description, function() {
+  module.exports[name] = function(firstParam, secondParam) {
+    const hasDescription = typeof firstParam === 'string'
+    const callback = hasDescription ? secondParam : firstParam
+    const middleware = function() {
       const value = callback()
       if (value && typeof value.then === 'function') {
         waitsForPromise(function() {
           return value
         })
       }
-    })
+    }
+    if (hasDescription) {
+      global[name](firstParam, middleware)
+    } else {
+      global[name](middleware)
+    }
   }
 })
 
