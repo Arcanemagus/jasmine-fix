@@ -1,54 +1,29 @@
 'use strict'
 
-function promisedFit(name, callback) {
-  fit(name, function() {
-    const value = callback()
-    if (value && typeof value.then === 'function') {
-      waitsForPromise({ timeout: 10 * 1000 }, function() {
-        return value
-      })
-    }
-  })
+function waitsForPromise (fn) {
+  const promise = fn()
+  waitsFor('spec promise to resolve', function (done) {
+    promise.then(done, function (error) {
+      jasmine.getEnv().currentSpec.fail(error)
+      done()
+    })
+  }, 10 * 1000)
 }
 
-function promisedIt(name, callback) {
-  it(name, function() {
-    const value = callback()
-    if (value && typeof value.then === 'function') {
-      waitsForPromise({ timeout: 10 * 1000 }, function() {
-        return value
-      })
-    }
-  })
-}
+const names = ['beforeEach', 'afterEach', 'it', 'fit', 'ffit', 'fffit']
 
-function promisedBeforeEach(callback) {
-  beforeEach(function() {
-    const value = callback()
-    if (value && typeof value.then === 'function') {
-      waitsForPromise({ timeout: 10 * 1000 }, function() {
-        return value
-      })
-    }
-  })
-}
-
-function promisedAfterEach(callback) {
-  afterEach(function() {
-    const value = callback()
-    if (value && typeof value.then === 'function') {
-      waitsForPromise({ timeout: 10 * 1000 }, function() {
-        return value
-      })
-    }
-  })
-}
-
-function promisedWait(timeout) {
-  return new Promise(function(resolve) {
-    setTimeout(resolve, timeout)
-  })
-}
+names.forEach((name) => {
+  module.exports[name] = function(description, callback) {
+    global[name](description, function() {
+      const value = callback()
+      if (value && typeof value.then === 'function') {
+        waitsForPromise(function() {
+          return value
+        })
+      }
+    })
+  }
+})
 
 // Jasmine 1.3.x has no sane way of resetting to native clocks, and since we're
 // gonna test promises and such, we're gonna need it
@@ -64,10 +39,8 @@ beforeEach(function() {
   resetClock()
 })
 
-module.exports = {
-  it: promisedIt,
-  fit: promisedFit,
-  wait: promisedWait,
-  beforeEach: promisedBeforeEach,
-  afterEach: promisedAfterEach,
+module.exports.wait = function(timeout) {
+  return new Promise(function(resolve) {
+    setTimeout(resolve, timeout)
+  })
 }
