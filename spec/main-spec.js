@@ -53,6 +53,10 @@ describe('Jasmine-Fix', function() {
       })
     }
   })
+  // This test is flaky, im not actually sure how it would pass anyway since calculating the time
+  // difference, takes time itself and as such, "diff" can be longer than what was waited. This is
+  // in addition to any time taken for the awaiter code to wrap up the promise.
+  // Suggestion: add a reasonable tolerance threshold
   describe('wait', function() {
     it('waits the asked amount and returns a promise that resolves properly', async function() {
       const time = Date.now()
@@ -73,4 +77,16 @@ describe('Jasmine-Fix', function() {
       expect(timesExecuted).toBe(4)
     })
   })
+
+  // The following tests work, that is they timeout after the correct amount of time
+  // The issue is, im not sure how to test for a timeout (without the test actually failing)
+
+  // describe('timeouts', function() {
+  //   myIt("uses a default timeout of 10 seconds when none is provided", async function() {
+  //     await wait(10001)
+  //   })
+  //   myIt("uses a custom timeout when provided", async function() {
+  //     await wait(2001)
+  //   }, 2000)
+  // })
 })

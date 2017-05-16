@@ -1,31 +1,33 @@
 'use strict'
 
-function waitsForPromise (fn) {
+function waitsForPromise (fn, timeout) {
+  console.log("timeout wfp", timeout);
   const promise = fn()
   waitsFor('spec promise to resolve', function (done) {
     promise.then(done, function (error) {
       jasmine.getEnv().currentSpec.fail(error)
       done()
     })
-  }, 10 * 1000)
+  }, timeout)
 }
 
 const names = ['beforeEach', 'afterEach', 'it', 'fit', 'ffit', 'fffit']
 
 names.forEach((name) => {
-  module.exports[name] = function(firstParam, secondParam) {
-    const hasDescription = typeof firstParam === 'string'
-    const callback = hasDescription ? secondParam : firstParam
+  module.exports[name] = function() {
+    const description = typeof arguments[0] === 'string' && arguments[0]
+    const callback = description ? arguments[1] : arguments[0]
+    const timeout = description ? arguments[2] : arguments[1];
     const middleware = function() {
       const value = callback()
       if (value && typeof value.then === 'function') {
         waitsForPromise(function() {
           return value
-        })
+        }, timeout != undefined ? timeout : 10 * 1000)
       }
     }
-    if (hasDescription) {
-      global[name](firstParam, middleware)
+    if (description) {
+      global[name](description, middleware)
     } else {
       global[name](middleware)
     }
