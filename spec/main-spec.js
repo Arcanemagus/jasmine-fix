@@ -53,16 +53,13 @@ describe('Jasmine-Fix', function() {
       })
     }
   })
-  // This test is flaky, im not actually sure how it would pass anyway since calculating the time
-  // difference, takes time itself and as such, "diff" can be longer than what was waited. This is
-  // in addition to any time taken for the awaiter code to wrap up the promise.
-  // Suggestion: add a reasonable tolerance threshold
   describe('wait', function() {
-    it('waits the asked amount and returns a promise that resolves properly', async function() {
-      const time = Date.now()
+    myIt('waits the asked amount and returns a promise that resolves properly', async function() {
+      const time = process.uptime() * 1000
       await wait(20)
-      const diff = Date.now() - time
-      expect(diff).toBe(20)
+      const diff = (process.uptime() * 1000) - time
+      expect(diff).toBeGreaterThan(19)
+      expect(diff).toBeLessThan(30)
     })
   })
   describe('patched beforeEach', function() {
