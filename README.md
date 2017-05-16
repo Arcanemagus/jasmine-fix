@@ -70,6 +70,13 @@ describe('My Cool App', function() {
     await wait(10)
     expect(myVar).toBe(true)
   })
+  it('accepts a custom timeout', async function() {
+    console.log('before')
+    await wait(15000)
+    console.log('after')
+  }, {
+    timeout: 20000,
+  })
 })
 ```
 
