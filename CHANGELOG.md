@@ -1,3 +1,7 @@
+## 1.2.0
+
+- Add timeout support to all functions
+
 ## 1.1.1
 
 - Fix `beforeEach` and `afterEach` *facepalm*
