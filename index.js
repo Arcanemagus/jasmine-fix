@@ -1,7 +1,6 @@
 'use strict'
 
 function waitsForPromise (fn, timeout) {
-  console.log("timeout wfp", timeout);
   const promise = fn()
   waitsFor('spec promise to resolve', function (done) {
     promise.then(done, function (error) {
@@ -12,18 +11,24 @@ function waitsForPromise (fn, timeout) {
 }
 
 const names = ['beforeEach', 'afterEach', 'it', 'fit', 'ffit', 'fffit']
+const defaultOptions = {
+  timeout: 10 * 1000,
+}
 
 names.forEach((name) => {
-  module.exports[name] = function() {
-    const description = typeof arguments[0] === 'string' && arguments[0]
-    const callback = description ? arguments[1] : arguments[0]
-    const timeout = description ? arguments[2] : arguments[1];
+  module.exports[name] = function(arg1, arg2, arg3) {
+    const callback = typeof arg1 === 'function' ? arg1 : arg2
+    const description = typeof arg1 === 'string' ? arg1 : null
+    const options = arg3 && typeof arg3 === 'object' ? arg3 : {}
+
+    Object.assign(options, defaultOptions)
+
     const middleware = function() {
       const value = callback()
       if (value && typeof value.then === 'function') {
         waitsForPromise(function() {
           return value
-        }, timeout != undefined ? timeout : 10 * 1000)
+        }, options.timeout)
       }
     }
     if (description) {
