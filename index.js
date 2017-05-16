@@ -33,7 +33,12 @@ module.exports.patch = function patch(name) {
   return function(arg1, arg2, arg3) {
     const callback = typeof arg1 === 'function' ? arg1 : arg2
     const description = typeof arg1 === 'string' ? arg1 : null
-    const optionsArg = arg3 && typeof arg3 === 'object' ? arg3 : {}
+    let optionsArg = {}
+    if (arg2 && typeof arg2 === 'object') {
+      optionsArg = arg2
+    } else if (arg3 && typeof arg3 === 'object') {
+      optionsArg = arg3
+    }
 
     const options = Object.assign({}, defaultOptions, optionsArg)
 
