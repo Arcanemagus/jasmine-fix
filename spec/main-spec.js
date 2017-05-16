@@ -1,6 +1,6 @@
 'use babel'
 
-import { it as myIt, wait, beforeEach } from '../'
+import { it as myIt, xit as myXit, wait, beforeEach } from '../'
 
 describe('Jasmine-Fix', function() {
   describe('it', function() {
@@ -75,15 +75,14 @@ describe('Jasmine-Fix', function() {
     })
   })
 
-  // The following tests work, that is they timeout after the correct amount of time
-  // The issue is, im not sure how to test for a timeout (without the test actually failing)
-
-  // describe('timeouts', function() {
-  //   myIt("uses a default timeout of 10 seconds when none is provided", async function() {
-  //     await wait(10001)
-  //   })
-  //   myIt("uses a custom timeout when provided", async function() {
-  //     await wait(2001)
-  //   }, 2000)
-  // })
+  describe('timeouts', function() {
+    myXit("uses a default timeout of 10 seconds when none is provided", async function() {
+      await wait(10001)
+    })
+    myXit("uses a custom timeout when provided", async function() {
+      await wait(20001)
+    }, {
+      timeout: 2000,
+    })
+  })
 })
