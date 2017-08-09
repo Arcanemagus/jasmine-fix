@@ -27,6 +27,9 @@ function resetClock() {
 
 beforeEach(function() {
   resetClock()
+  // Jasmine mocks Date.now()
+  // See steelbrain/jasmine-fix#6
+  jasmine.unspy(Date, 'now')
 })
 
 module.exports.patch = function patch(name) {
