@@ -87,7 +87,7 @@ describe('Jasmine-Fix', function() {
   })
 
   describe('date fix', function() {
-    myIt('it unmocks Date.now automatically', async() {
+    myIt('it unmocks Date.now automatically', async function() {
       const before = Date.now()
       await wait(10)
       const after = Date.now()
