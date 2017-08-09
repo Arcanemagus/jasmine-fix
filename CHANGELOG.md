@@ -1,3 +1,7 @@
+## 1.3.0
+
+- Unmock `Date.now()` by default
+
 ## 1.2.0
 
 - Add timeout support to all functions
