@@ -1,6 +1,6 @@
 # Changelog
 
-## Upcoming
+## 1.3.1
 
 - Use Jasmine's built in method to set default timeout
 
