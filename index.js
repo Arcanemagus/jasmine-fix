@@ -11,9 +11,6 @@ function waitsForPromise (fn, timeout) {
 }
 
 const names = ['beforeEach', 'afterEach', 'xit', 'it', 'fit', 'ffit', 'fffit']
-const defaultOptions = {
-  timeout: 10 * 1000,
-}
 
 // Jasmine 1.3.x has no sane way of resetting to native clocks, and since we're
 // gonna test promises and such, we're gonna need it
@@ -32,6 +29,9 @@ beforeEach(function() {
   jasmine.unspy(Date, 'now')
 })
 
+// The default timeout of 6 seconds is quite often too slow, bump it to 10 seconds
+jasmine.getEnv().defaultTimeoutInterval = 10 * 1000;
+
 module.exports.patch = function patch(name) {
   return function(arg1, arg2, arg3) {
     const callback = typeof arg1 === 'function' ? arg1 : arg2
@@ -43,7 +43,7 @@ module.exports.patch = function patch(name) {
       optionsArg = arg3
     }
 
-    const options = Object.assign({}, defaultOptions, optionsArg)
+    const options = Object.assign({}, optionsArg)
 
     const middleware = function() {
       const value = callback()

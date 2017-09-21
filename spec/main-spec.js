@@ -1,6 +1,6 @@
 'use babel'
 
-import { it as myIt, xit as myXit, wait, beforeEach } from '../'
+import { it as myIt, xit as myXIt, wait, beforeEach } from '../'
 
 describe('Jasmine-Fix', function() {
   describe('it', function() {
@@ -76,11 +76,11 @@ describe('Jasmine-Fix', function() {
   })
 
   describe('timeouts', function() {
-    myXit("uses a default timeout of 10 seconds when none is provided", async function() {
-      await wait(10001)
+    myIt('uses a default timeout of 10 seconds when none is provided', async function() {
+      await wait(20 * 1000)
     })
-    myXit("uses a custom timeout when provided", async function() {
-      await wait(20001)
+    myXIt('uses a custom timeout when provided', async function() {
+      await wait(10 * 1000)
     }, {
       timeout: 2000,
     })

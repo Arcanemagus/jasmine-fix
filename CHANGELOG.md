@@ -1,3 +1,9 @@
+# Changelog
+
+## Upcoming
+
+- Use Jasmine's built in method to set default timeout
+
 ## 1.3.0
 
 - Unmock `Date.now()` by default
